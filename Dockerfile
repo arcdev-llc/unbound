@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7
-ARG ALPINE_VERSION=3.21
+ARG ALPINE_VERSION=3.21.5
 ARG OPENSSL_VERSION=3.6.0
 ARG NGTCP2_VERSION=head
 
@@ -110,8 +110,6 @@ RUN --mount=type=cache,target=/ccache,id=ccache-unbound-${TARGETPLATFORM} \
     OPENSSL_VERSION="${OPENSSL_VERSION}" \
     /usr/local/bin/unbound-build.sh
 
-# Apply file capability in the build stage so runtime doesn’t need libcap tooling.
-# This allows binding to 53 as non-root without running the container privileged.
 RUN setcap cap_net_bind_service=+ep /tmp/unbound-install/usr/sbin/unbound
 
 ############################
@@ -120,7 +118,6 @@ RUN setcap cap_net_bind_service=+ep /tmp/unbound-install/usr/sbin/unbound
 FROM alpine:${ALPINE_VERSION} AS runtime
 ARG TARGETPLATFORM
 
-# Minimal runtime deps; omit bash (prefer /bin/sh in entrypoint).
 RUN --mount=type=cache,target=/var/cache/apk,id=apk-cache-${TARGETPLATFORM},sharing=locked \
     apk add --no-cache \
       ca-certificates \
@@ -160,7 +157,6 @@ STOPSIGNAL SIGTERM
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD unbound-host -C /etc/unbound/unbound.conf -v cloudflare.com > /dev/null 2>&1 || exit 1
 
-# Ensure this script is POSIX sh, not bash.
 COPY --chmod=0755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 USER unbound
