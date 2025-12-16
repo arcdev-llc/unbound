@@ -1,0 +1,11 @@
+.git
+**/.git
+**/*.o
+**/*.a
+**/*.so
+**/*.lo
+**/*.la
+**/.libs
+**/.deps
+**/build
+**/dist

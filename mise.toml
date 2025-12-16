@@ -1,0 +1,22 @@
+[tasks.build]
+description = "Build the unbound image"
+run         = "DOCKER_BUILDKIT=1 docker build --progress=plain --build-arg DEBIAN_VERSION=bookworm --build-arg OPENSSL_VERSION=3.6.0 --build-arg NGTCP2_VERSION=1.18.0 -t unbound:dev ."
+
+[tasks.build-no-cache]
+description = "Build the unbound image without cache"
+run         = "DOCKER_BUILDKIT=1 docker build --progress=plain --build-arg DEBIAN_VERSION=bookworm --build-arg OPENSSL_VERSION=3.6.0 --build-arg NGTCP2_VERSION=1.13.0 --no-cache -t unbound:dev ."
+
+[tasks.start]
+description = "Start the unbound container"
+run         = "docker run --rm -p 5353:5353/udp -p 5353:5353/tcp -p 8853:8853/tcp -p 8853:8853/udp -v '$(pwd)/config:/etc/unbound:ro' -v 'unbound-data:/var/lib/unbound' --tmpfs '/var/lib/unbound:exec' unbound:dev"
+
+[tasks.clean]
+description = "Clean the unbound container"
+run         = "docker stop unbound && docker container rm unbound"
+
+[tasks.stop]
+description = "Stop the unbound container"
+run         = "docker stop unbound && docker rm unbound"
+
+[tools]
+hadolint = "latest"
