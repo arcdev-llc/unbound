@@ -43,7 +43,7 @@ cd "${GIT_CACHE}"
 git fetch origin --force
 
 if [ "${NGTCP2_VERSION}" = "head" ]; then
-  git fetch origin main master --force
+  git fetch origin master --force
   if git show-ref --verify --quiet refs/remotes/origin/main; then
     git checkout origin/main
   elif git show-ref --verify --quiet refs/remotes/origin/master; then
