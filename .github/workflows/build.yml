@@ -2,8 +2,7 @@ name: Build & Push (Docker Hub)
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: ["main"]
 
 jobs:
   build:
