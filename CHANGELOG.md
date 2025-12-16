@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.1](https://github.com/arcdev-llc/unbound/compare/v1.0.0...v1.0.1) (2025-12-16)
+
+
+### Bug Fixes
+
+* adjust git fetch command to only fetch from master branch ([e250d87](https://github.com/arcdev-llc/unbound/commit/e250d8740c5b1e95111197cd0d0d4e66187cdaf1))
+* fetching from main instead of master branch ([85b9239](https://github.com/arcdev-llc/unbound/commit/85b923914b148e340d16f075d990ed27cc039ee5))
+* update Docker Hub login to use vars instead of secrets ([aea9ef1](https://github.com/arcdev-llc/unbound/commit/aea9ef1e0cbce32e53f7bfdf0587931edb90460e))
+* update Docker Hub tags to use vars for versioning ([111cb0b](https://github.com/arcdev-llc/unbound/commit/111cb0b8fee75dd16fa1d34fed358e6b9c666cd7))
+
 ## 1.0.0 (2025-12-16)
 
 
